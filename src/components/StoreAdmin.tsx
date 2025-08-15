@@ -25,9 +25,10 @@ export default function StoreAdmin() {
 	});
 
 	const FormikInput = ({
-		label, ...props
+		label,
+		...props
 	}: {
-        label: string;
+		label: string;
 		name: string;
 		type?: string;
 		placeholder?: string;
@@ -36,8 +37,15 @@ export default function StoreAdmin() {
 
 		return (
 			<div className='mb-4'>
-                <Label className="mb-2" htmlFor={props.name}>{label}</Label>
-				<Input className="shadow-[inset_0_-1px_0px_hsl(0,0%,40%)] inset-shadow-2xs inset-shadow-neutral-900" {...field} {...props} id={props.name} />
+				<Label className='mb-2' htmlFor={props.name}>
+					{label}
+				</Label>
+				<Input
+					className='shadow-[inset_0_-1px_0px_hsl(0,0%,40%)] inset-shadow-2xs inset-shadow-neutral-900'
+					{...field}
+					{...props}
+					id={props.name}
+				/>
 				{meta.touched && meta.error ? (
 					<p className='text-red-500 text-sm'>{meta.error}</p>
 				) : null}
@@ -46,56 +54,78 @@ export default function StoreAdmin() {
 	};
 
 	const MotionAlertCancel = motion(AlertDialogCancel);
-    const MotionButton = motion(AlertDialogAction);
+	const MotionButton = motion(AlertDialogAction);
 
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
 				<Button variant='outline'>Add Admin</Button>
 			</AlertDialogTrigger>
-			<AlertDialogContent>
+			<AlertDialogContent className='block overflow-auto px-10'>
 				<AlertDialogHeader className='justify-center text-center mb-4'>
 					<AlertDialogTitle className='text-center'>
 						Add New Admin
 					</AlertDialogTitle>
 				</AlertDialogHeader>
-				<AlertDialogDescription>
-					<Formik
-						id='add-admin-form'
-						initialValues={{ name: "", age: null, username: "", password: "" }}
-						validationSchema={schema}
-						onSubmit={(values) => {
-							console.log(values);
-						}}
-					>
-						{({ isSubmiting }) => (
-							<Form className='max-w-sm mx-auto'>
-								<FormikInput label="Name:" name='name' type='text' placeholder='Name' />
-								<FormikInput label="Age:" name='age' type='text' placeholder='Age' />
-								<FormikInput label="Username:"
-									name='username'
-									type='text'
-									placeholder='Username'
-								/>
-								<FormikInput label="Password:"
-									name='password'
-									type='password'
-									placeholder='Password'
-								/>
-								<div className='flex flex-row justify-between gap-5 mt-10'>
-									<MotionAlertCancel
-                                    whileHover={{ backgroundColor: "hsl(0, 100%, 50%)", color: "#000" }}
-                                     className='text-red-500 '>
-										Cancel
-									</MotionAlertCancel>
-									<MotionButton whileHover={{ backgroundColor: "hsl(190, 0%, 68%)", boxShadow: "none" }} className='bg-neutral-300 text-neutral-900 w-[75%] inset-shadow-xs inset-shadow-gray-50 shadow-xl shadow-gray-950' type='submit'>
-										Create
-									</MotionButton>
-								</div>
-							</Form>
-						)}
-					</Formik>
-				</AlertDialogDescription>
+				<Formik
+					id='add-admin-form'
+					initialValues={{ name: "", age: null, username: "", password: "" }}
+					validationSchema={schema}
+					onSubmit={(values) => {
+						console.log(values);
+					}}
+				>
+					{({ isSubmiting }) => (
+						<Form className='max-w-sm mx-auto'>
+							<FormikInput
+								label='Name:'
+								name='name'
+								type='text'
+								placeholder='Name'
+							/>
+							<FormikInput
+								label='Age:'
+								name='age'
+								type='text'
+								placeholder='Age'
+							/>
+							<FormikInput
+								label='Username:'
+								name='username'
+								type='text'
+								placeholder='Username'
+							/>
+							<FormikInput
+								label='Password:'
+								name='password'
+								type='password'
+								placeholder='Password'
+							/>
+							<div className='flex flex-row gap-5 mt-10'>
+								<MotionAlertCancel
+									whileHover={{
+										backgroundColor: "hsl(0, 100%, 50%)",
+										color: "#000",
+									}}
+									className='text-red-500'
+								>
+									Cancel
+								</MotionAlertCancel>
+
+								<MotionButton
+									whileHover={{
+										backgroundColor: "hsl(190, 0%, 68%)",
+										boxShadow: "none",
+									}}
+									className='bg-neutral-300 text-neutral-900 flex-1 inset-shadow-xs inset-shadow-gray-50 shadow-xl shadow-gray-950'
+									type='submit'
+								>
+									Create
+								</MotionButton>
+							</div>
+						</Form>
+					)}
+				</Formik>
 				<AlertDialogFooter></AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
